@@ -1,30 +1,30 @@
 import Encoder from './encoder';
 
 class MicRecorder {
-  constructor(config) {
-    const AudioContext = window.AudioContext || window.webkitAudioContext;
-    this.config = {
-      // 128 or 160 kbit/s – mid-range bitrate quality
-      bitRate: 128,
+constructor(config) {
+  const AudioContext = window.AudioContext || window.webkitAudioContext;
+  this.config = {
+    // 128 or 160 kbit/s – mid-range bitrate quality
+    bitRate: 128,
 
-      // There is a known issue with some macOS machines, where the recording
-      // will sometimes have a loud 'pop' or 'pop-click' sound. This flag
-      // prevents getting audio from the microphone a few milliseconds after
-      // the begining of the recording. It also helps to remove the mouse
-      // "click" sound from the output mp3 file.
-      startRecordingAt: 300,
-      deviceId: null,
-      context = new AudioContext();
-    };
+    // Known issue fix: delay start to avoid pops
+    startRecordingAt: 300,
+    deviceId: null
+  };
 
-    this.activeStream = null;
-    this.context = null;
-    this.microphone = null;
-    this.processor = null;
-    this.startTime = 0;
+  // Assign default configuration over provided config
+  Object.assign(this.config, config);
 
-    Object.assign(this.config, config);
-  }
+  // Initialize AudioContext once for the entire lifecycle of the instance
+  this.context = new AudioContext();
+
+  // Initialize the rest of the properties
+  this.activeStream = null;
+  this.microphone = null;
+  this.processor = null;
+  this.startTime = 0;
+}
+
 
   /**
    * Starts to listen for the microphone sound
