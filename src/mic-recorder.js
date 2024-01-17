@@ -2,6 +2,7 @@ import Encoder from './encoder';
 
 class MicRecorder {
   constructor(config) {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
     this.config = {
       // 128 or 160 kbit/s – mid-range bitrate quality
       bitRate: 128,
@@ -13,6 +14,7 @@ class MicRecorder {
       // "click" sound from the output mp3 file.
       startRecordingAt: 300,
       deviceId: null,
+      context = new AudioContext();
     };
 
     this.activeStream = null;
@@ -86,8 +88,8 @@ class MicRecorder {
    * @return Promise
    */
   start() {
-    const AudioContext = window.AudioContext || window.webkitAudioContext;
-    this.context = new AudioContext();
+    // const AudioContext = window.AudioContext || window.webkitAudioContext;
+    // this.context = new AudioContext();
     this.config.sampleRate = this.context.sampleRate;
     this.lameEncoder = new Encoder(this.config);
 
