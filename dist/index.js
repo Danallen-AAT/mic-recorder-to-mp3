@@ -15913,9 +15913,10 @@ var MicRecorder = function () {
       var _this2 = this;
 	
 	if (!this.context) {
-    const AudioContext = window.AudioContext || window.webkitAudioContext;
-    this.context = new AudioContext();
-  }
+	console.warn("NO AUDIO CONTEXT");
+	const AudioContext = window.AudioContext || window.webkitAudioContext;
+	this.context = new AudioContext();
+	} else {console.log("EXISTING AUDIO CONTEXT, NOT OVERWRITTEN")}
 
       // var AudioContext = window.AudioContext || window.webkitAudioContext;
       // this.context = new AudioContext();
