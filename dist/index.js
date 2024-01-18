@@ -15887,9 +15887,9 @@ var MicRecorder = function () {
 
         // If all references using this.context are destroyed, context is closed
         // automatically. DOMException is fired when trying to close again
-        if (this.context && this.context.state !== 'closed') {
-          this.context.close();
-        }
+        // if (this.context && this.context.state !== 'closed') {
+        //   this.context.close();
+        // }
 
         this.processor.onaudioprocess = null;
 
@@ -15911,9 +15911,14 @@ var MicRecorder = function () {
      */
     value: function start() {
       var _this2 = this;
+	
+	if (!this.context) {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    this.context = new AudioContext();
+  }
 
-      var AudioContext = window.AudioContext || window.webkitAudioContext;
-      this.context = new AudioContext();
+      // var AudioContext = window.AudioContext || window.webkitAudioContext;
+      // this.context = new AudioContext();
       this.config.sampleRate = this.context.sampleRate;
       this.lameEncoder = new Encoder(this.config);
 
